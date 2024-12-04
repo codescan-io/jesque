@@ -1,0 +1,14 @@
+<settings>
+	<servers>
+		<server>
+			<id>libs-release</id>
+			<username>${env.ARTIFACTORY_USER}</username>
+			<password>${env.ARTIFACTORY_PWD}</password>
+		</server>
+		<server>
+			<id>libs-snapshot</id>
+			<username>${env.ARTIFACTORY_USER}</username>
+			<password>${env.ARTIFACTORY_PWD}</password>
+		</server>
+	</servers>
+</settings>
