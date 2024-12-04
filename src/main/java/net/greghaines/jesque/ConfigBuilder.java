@@ -45,6 +45,7 @@ public class ConfigBuilder implements Serializable {
     public static final HashSet<String> DEFAULT_SENTINELS = null;
     /** null */
     public static final String DEFAULT_MASTERNAME = null;
+    public static final Boolean SSL_ENABLED = false;
 
     /**
      * @return a Config with all the default values set
@@ -61,6 +62,7 @@ public class ConfigBuilder implements Serializable {
     private Set<String> sentinels = DEFAULT_SENTINELS;
     private String masterName = DEFAULT_MASTERNAME;
     private int database = DEFAULT_DATABASE;
+    private Boolean sslEnabled = SSL_ENABLED;
 
     /**
      * No-arg constructor.
@@ -86,6 +88,7 @@ public class ConfigBuilder implements Serializable {
         this.database = startingPoint.getDatabase();
         this.sentinels = startingPoint.getSentinels();
         this.masterName = startingPoint.getMasterName();
+        this.sslEnabled = startingPoint.getSslEnabled();
     }
 
     /**
@@ -202,15 +205,29 @@ public class ConfigBuilder implements Serializable {
     }
 
     /**
+     * Configs created by this ConfigBuilder will use the given Redis sslEnabled.
+     *
+     * @param sslEnabled the Redis set of ssl
+     * @return this ConfigBuilder
+     */
+    public ConfigBuilder withSSL(final Boolean sslEnabled) {
+        if (sslEnabled == null) {
+            throw new IllegalArgumentException("masterName is null or empty: " + masterName);
+        }
+        this.sslEnabled = sslEnabled;
+        return this;
+    }
+
+    /**
      * @return a new Config initialized with the current values
      */
     public Config build() {
         if (this.sentinels != null && this.sentinels.size() > 0 && this.masterName != null 
                 && !"".equals(this.masterName)) {
             return new Config(this.sentinels, this.masterName, this.timeout, this.password, this.namespace, 
-                    this.database);
+                    this.database, this.sslEnabled);
         } else {
-            return new Config(this.host, this.port, this.timeout, this.password, this.namespace, this.database);
+            return new Config(this.host, this.port, this.timeout, this.password, this.namespace, this.database, this.sslEnabled);
         }
     }
 }

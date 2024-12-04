@@ -38,6 +38,7 @@ public class Config implements Serializable {
     private final int database;
     private final Set<String> sentinels;
     private final String masterName;
+    private final Boolean sslEnabled;
 
     /**
      * Using a ConfigBuilder is recommended...
@@ -51,7 +52,7 @@ public class Config implements Serializable {
      * @see ConfigBuilder
      */
     public Config(final String host, final int port, final int timeout, final String password, final String namespace, 
-            final int database) {
+            final int database, Boolean sslEnabled) {
         if (host == null || "".equals(host)) {
             throw new IllegalArgumentException("host must not be null or empty: " + host);
         }
@@ -75,6 +76,7 @@ public class Config implements Serializable {
         this.database = database;
         this.sentinels = null;
         this.masterName = null;
+        this.sslEnabled = sslEnabled;
     }
 
     /**
@@ -89,7 +91,7 @@ public class Config implements Serializable {
      * @see ConfigBuilder
      */
     public Config(final Set<String> sentinels, final String masterName, final int timeout, final String password, 
-            final String namespace, final int database) {
+            final String namespace, final int database, Boolean sslEnabled) {
         if (sentinels == null || sentinels.size() < 1) {
             throw new IllegalArgumentException("sentinels must not be null or empty: " + sentinels);
         }
@@ -113,6 +115,7 @@ public class Config implements Serializable {
         this.database = database;
         this.host = ConfigBuilder.DEFAULT_HOST;
         this.port = ConfigBuilder.DEFAULT_PORT;
+        this.sslEnabled = sslEnabled;
     }
 
     /**
@@ -176,6 +179,13 @@ public class Config implements Serializable {
      */
     public String getURI() {
         return "redis://" + this.host + ":" + this.port + "/" + this.database;
+    }
+
+    /**
+     * @return the SSLEnabled
+     */
+    public Boolean getSslEnabled() {
+        return this.sslEnabled;
     }
 
     /**
