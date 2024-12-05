@@ -66,7 +66,7 @@ public class AdminClientImpl extends AbstractAdminClient {
     public AdminClientImpl(final Config config, final boolean checkConnectionBeforeUse) {
         super(config);
         this.config = config;
-        this.jedis = new Jedis(config.getHost(), config.getPort(), config.getTimeout());
+        this.jedis = new Jedis(config.getHost(), config.getPort(), config.getTimeout(), config.getSslEnabled());
         authenticateAndSelectDB();
         this.checkConnectionBeforeUse = checkConnectionBeforeUse;
         this.keepAliveService = null;
@@ -89,7 +89,7 @@ public class AdminClientImpl extends AbstractAdminClient {
     public AdminClientImpl(final Config config, final long initialDelay, final long period, final TimeUnit timeUnit) {
         super(config);
         this.config = config;
-        this.jedis = new Jedis(config.getHost(), config.getPort(), config.getTimeout());
+        this.jedis = new Jedis(config.getHost(), config.getPort(), config.getTimeout(), config.getSslEnabled());
         authenticateAndSelectDB();
         this.checkConnectionBeforeUse = false;
         this.keepAliveService = Executors.newSingleThreadScheduledExecutor();

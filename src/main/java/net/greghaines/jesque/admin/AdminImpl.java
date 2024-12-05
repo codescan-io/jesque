@@ -95,7 +95,8 @@ public class AdminImpl implements Admin {
      * @param jobFactory the job factory that materializes the jobs
      */
     public AdminImpl(final Config config, final Set<String> channels, final JobFactory jobFactory) {
-        this(config, channels, jobFactory, new Jedis(config.getHost(), config.getPort(), config.getTimeout()));
+        this(config, channels, jobFactory, new Jedis(config.getHost(), config.getPort(), config.getTimeout(),
+                config.getSslEnabled()));
     }
 
     /**

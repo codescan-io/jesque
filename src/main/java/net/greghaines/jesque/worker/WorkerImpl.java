@@ -139,7 +139,7 @@ public class WorkerImpl implements Worker {
      * @throws IllegalArgumentException if either config, queues or jobFactory is null
      */
     public WorkerImpl(final Config config, final Collection<String> queues, final JobFactory jobFactory) {
-        this(config, queues, jobFactory, new Jedis(config.getHost(), config.getPort(), config.getTimeout()));
+        this(config, queues, jobFactory, new Jedis(config.getHost(), config.getPort(), config.getTimeout(), config.getSslEnabled()));
     }
 
     /**
